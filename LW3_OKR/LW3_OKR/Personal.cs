@@ -21,6 +21,8 @@ namespace LW3_OKR
         public string Position { get; set; }
         [BsonElement("Stat")]
         public string Stat { get; set; }
+        [BsonElement("Image")]
+        public string Image { get; set; }
         public Personal () 
         {
             SurName = "";
