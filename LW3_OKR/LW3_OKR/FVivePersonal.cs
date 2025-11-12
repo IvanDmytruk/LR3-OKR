@@ -25,9 +25,9 @@ namespace LW3_OKR
             Personal p = persons[0];
 
             label2.Text = "Ім'я: " + p.Name;
-            label3.Text = "Прізвище: " + p.Name;
-            label3.Text = "Прізвище: " + p.Position;
-            label3.Text = "Прізвище: " + p.Stat;
+            label3.Text = "Прізвище: " + p.SurName;
+            label4.Text = "Прізвище: " + p.Position;
+            label5.Text = "Прізвище: " + p.Stat;
 
             pictureBox1.Image = Image.FromFile(p.Image);
         }
@@ -36,9 +36,9 @@ namespace LW3_OKR
             Personal p = persons[i];
 
             label2.Text = "Ім'я: " + p.Name;
-            label3.Text = "Прізвище: " + p.Name;
-            label3.Text = "Прізвище: " + p.Position;
-            label3.Text = "Прізвище: " + p.Stat;
+            label3.Text = "Прізвище: " + p.SurName;
+            label4.Text = "Прізвище: " + p.Position;
+            label5.Text = "Прізвище: " + p.Stat;
 
             pictureBox1.Image = Image.FromFile(p.Image);
         }
@@ -53,11 +53,11 @@ namespace LW3_OKR
         }
         private void button2_Click(object sender, EventArgs e)
         {
+            position++;
             if (position == q)
             {
                 position = 0;
             }
-            position++;
             Refresh(position);
         }
     }
