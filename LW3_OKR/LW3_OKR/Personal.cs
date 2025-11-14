@@ -12,7 +12,7 @@ namespace LW3_OKR
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string? Id { get; set; }
         [BsonElement("SurName")]
         public string SurName { get; set; }
         [BsonElement("Name")]
@@ -43,7 +43,8 @@ namespace LW3_OKR
         private IMongoCollection<Personal> personalCollection;
         public MongoDBPersonal()
         {
-            var client = new MongoClient("mongodb+srv://<ivandmytruk42_db_user>:<xd7NiRFVNU2atx5e>@formia.awxcqul.mongodb.net/?appName=ForMiA");
+            var client = new MongoClient("mongodb+srv://ivandmytruk42_db_user:lwokr123@db.rdcvntl.mongodb.net/?appName=DB");
+
             var database = client.GetDatabase("LW3_OKR_DB");
             personalCollection = database.GetCollection<Personal>("Personal");
         }

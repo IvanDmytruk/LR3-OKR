@@ -1,4 +1,4 @@
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+﻿using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using System;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.DataFormats;
@@ -14,6 +14,10 @@ namespace LW3_OKR
             InitializeComponent();
             //mongoService = new MongoService();
             //LoadData();
+            button1.Font = new Font("Segoe UI Emoji", 12);
+            button2.Font = new Font("Segoe UI Emoji", 12);
+            button3.Font = new Font("Segoe UI Emoji", 12);
+            button4.Font = new Font("Segoe UI Emoji", 12);
         }
         //void LoadData()
         //{
@@ -28,6 +32,57 @@ namespace LW3_OKR
             FVivePersonal fVivePersonal = new FVivePersonal();
             fVivePersonal.ShowDialog();
             //LoadData();
+        }
+
+        private void button1_MouseEnter(object sender, EventArgs e)
+        {
+            Button button = sender as Button;
+            if (button != null)
+            {
+                button.BackColor = Color.LightBlue;
+            }
+            if(button1==button)
+            {
+                button.Text = "🍣";
+            }
+            if (button2 == button)
+            {
+                button.Text = "🍱";
+            }
+            if (button3 == button)
+            {
+                button.Text = "🍙";
+            }
+            if (button4 == button)
+            {
+                button.Text = "🥤";
+            }
+
+        }
+
+        private void button1_MouseLeave(object sender, EventArgs e)
+        {
+            Button button = sender as Button;
+            if (button != null)
+            {
+                button.BackColor =  SystemColors.Control;
+            }
+            if (button1 == button)
+            {
+                button.Text = "Суші";
+            }
+            if (button2 == button)
+            {
+                button.Text = "Сети";
+            }
+            if (button3 == button)
+            {
+                button.Text = "Роли";
+            }
+            if (button4 == button)
+            {
+                button.Text = "Напої";
+            }
         }
     }
 }

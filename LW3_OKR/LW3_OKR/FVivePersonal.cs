@@ -8,57 +8,67 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MongoDB.Driver;
+using System.IO;
 namespace LW3_OKR
 {
     public partial class FVivePersonal : Form
     {
         private MongoDBPersonal db;
         private List<Personal> persons;
-        int q = 4;//Це типу кількість "сушистів"
-        int position = 0;//це позиція де ми зараз
+        private int q;
+        private int position = 0;
+
         public FVivePersonal()
         {
             InitializeComponent();
             db = new MongoDBPersonal();
             persons = db.GetAllPersonals();
-            
-            Personal p = persons[0];
+            q = persons.Count;
 
-            label2.Text = "Ім'я: " + p.Name;
-            label3.Text = "Прізвище: " + p.SurName;
-            label4.Text = "Прізвище: " + p.Position;
-            label5.Text = "Прізвище: " + p.Stat;
+            if (q == 0)
+            {
+                MessageBox.Show("Немає персоналу в базі!");
+                return;
+            }
 
-            pictureBox1.Image = Image.FromFile(p.Image);
+            ShowPerson(0);
         }
-        public void Refresh(int i)
+        public void ShowPerson(int i)
         {
             Personal p = persons[i];
 
             label2.Text = "Ім'я: " + p.Name;
             label3.Text = "Прізвище: " + p.SurName;
-            label4.Text = "Прізвище: " + p.Position;
-            label5.Text = "Прізвище: " + p.Stat;
+            label4.Text = "Посада: " + p.Position;
+            label5.Text = "Статус: " + p.Stat;
 
-            pictureBox1.Image = Image.FromFile(p.Image);
+            MessageBox.Show("Path from DB: " + p.Image);
+
+            if (File.Exists(p.Image))
+            {
+                pictureBox1.Image = Image.FromFile(p.Image);
+            }
+            else
+            {
+                MessageBox.Show("NO FILE FOUND at: " + p.Image);
+            }
         }
+
         private void button1_Click(object sender, EventArgs e)
         {
             position--;
-            if(position==-1)
-            {
-                position = 3;
-            }
-            Refresh(position);
+            if (position < 0)
+                position = q - 1;
+
+            ShowPerson(position);
         }
         private void button2_Click(object sender, EventArgs e)
         {
             position++;
-            if (position == q)
-            {
+            if (position >= q)
                 position = 0;
-            }
-            Refresh(position);
+
+            ShowPerson(position);
         }
     }
 }

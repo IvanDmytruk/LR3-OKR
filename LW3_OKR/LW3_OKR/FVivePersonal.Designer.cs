@@ -29,32 +29,77 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            label5 = new Label();
+            label4 = new Label();
+            label3 = new Label();
+            label2 = new Label();
+            pictureBox1 = new PictureBox();
             button1 = new Button();
             button2 = new Button();
-            pictureBox1 = new PictureBox();
-            label2 = new Label();
-            label3 = new Label();
-            label4 = new Label();
-            label5 = new Label();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.BackColor = Color.Cornsilk;
             panel1.Controls.Add(label5);
             panel1.Controls.Add(label4);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(pictureBox1);
-            panel1.Location = new Point(12, 40);
+            panel1.Location = new Point(12, 12);
             panel1.Name = "panel1";
-            panel1.Size = new Size(649, 347);
+            panel1.Size = new Size(649, 262);
             panel1.TabIndex = 0;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(275, 171);
+            label5.Name = "label5";
+            label5.Size = new Size(50, 20);
+            label5.TabIndex = 5;
+            label5.Text = "label5";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(275, 126);
+            label4.Name = "label4";
+            label4.Size = new Size(50, 20);
+            label4.TabIndex = 4;
+            label4.Text = "label4";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(275, 85);
+            label3.Name = "label3";
+            label3.Size = new Size(50, 20);
+            label3.TabIndex = 3;
+            label3.Text = "label3";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(275, 46);
+            label2.Name = "label2";
+            label2.Size = new Size(50, 20);
+            label2.TabIndex = 2;
+            label2.Text = "label2";
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(23, 30);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(196, 186);
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
             // 
             // button1
             // 
-            button1.Location = new Point(12, 401);
+            button1.Location = new Point(10, 280);
             button1.Name = "button1";
             button1.Size = new Size(126, 37);
             button1.TabIndex = 1;
@@ -64,7 +109,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(535, 401);
+            button2.Location = new Point(533, 280);
             button2.Name = "button2";
             button2.Size = new Size(126, 37);
             button2.TabIndex = 2;
@@ -72,60 +117,17 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
-            // pictureBox1
-            // 
-            pictureBox1.Location = new Point(9, 9);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(196, 186);
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(239, 31);
-            label2.Name = "label2";
-            label2.Size = new Size(50, 20);
-            label2.TabIndex = 2;
-            label2.Text = "label2";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(239, 70);
-            label3.Name = "label3";
-            label3.Size = new Size(50, 20);
-            label3.TabIndex = 3;
-            label3.Text = "label3";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(239, 111);
-            label4.Name = "label4";
-            label4.Size = new Size(50, 20);
-            label4.TabIndex = 4;
-            label4.Text = "label4";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(239, 156);
-            label5.Name = "label5";
-            label5.Size = new Size(50, 20);
-            label5.TabIndex = 5;
-            label5.Text = "label5";
-            // 
             // FVivePersonal
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(671, 450);
+            BackgroundImage = Properties.Resources.ChatGPT_Image_12_лист__2025_р___09_39_43;
+            ClientSize = new Size(671, 326);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(panel1);
             Name = "FVivePersonal";
-            Text = "FVivePersonal";
+            Text = "Персонал";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
