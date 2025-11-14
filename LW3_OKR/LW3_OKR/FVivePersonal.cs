@@ -42,12 +42,8 @@ namespace LW3_OKR
             label4.Text = "Посада: " + p.Position;
             label5.Text = "Статус: " + p.Stat;
 
-            MessageBox.Show("Path from DB: " + p.Image);
-
             if (File.Exists(p.Image))
-            {
                 pictureBox1.Image = Image.FromFile(p.Image);
-            }
             else
             {
                 MessageBox.Show("NO FILE FOUND at: " + p.Image);
