@@ -40,7 +40,7 @@ namespace LW3_OKR
             label2.Text = "Ім'я: " + p.Name;
             label3.Text = "Прізвище: " + p.SurName;
             label4.Text = "Посада: " + p.Position;
-            label5.Text = "Статус: " + p.Stat;
+            label5.Text = "Стать: " + p.Stat;
 
             string fullPath = Path.Combine(Application.StartupPath, "Images", p.Image);
 
