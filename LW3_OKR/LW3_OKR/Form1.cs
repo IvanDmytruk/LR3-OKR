@@ -1,10 +1,11 @@
-﻿using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
-using System;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using static System.Windows.Forms.DataFormats;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
+using System;
+using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using static System.Windows.Forms.DataFormats;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 namespace LW3_OKR
 {
     public partial class Form1 : Form
@@ -12,26 +13,15 @@ namespace LW3_OKR
         public Form1()
         {
             InitializeComponent();
-            //mongoService = new MongoService();
-            //LoadData();
             button1.Font = new Font("Segoe UI Emoji", 12);
             button2.Font = new Font("Segoe UI Emoji", 12);
             button3.Font = new Font("Segoe UI Emoji", 12);
             button4.Font = new Font("Segoe UI Emoji", 12);
         }
-        //void LoadData()
-        //{
-        //    var client = new MongoClient("mongodb+srv://<ivandmytruk42_db_user>:<xd7NiRFVNU2atx5e>@formia.awxcqul.mongodb.net/?appName=ForMiA");
-        //    var database = client.GetDatabase("LW3_OKR");
-        //    var collection = database.GetCollection<Orders>("Orders");
-        //    var orders = collection.Find(new BsonDocument()).ToList();
-        //}
-
         private void VivePersonal_Click(object sender, EventArgs e)
         {
             FVivePersonal fVivePersonal = new FVivePersonal();
             fVivePersonal.ShowDialog();
-            //LoadData();
         }
 
         private void button1_MouseEnter(object sender, EventArgs e)
@@ -41,7 +31,7 @@ namespace LW3_OKR
             {
                 button.BackColor = Color.LightBlue;
             }
-            if(button1==button)
+            if (button1 == button)
             {
                 button.Text = "🍣";
             }
@@ -65,7 +55,7 @@ namespace LW3_OKR
             Button button = sender as Button;
             if (button != null)
             {
-                button.BackColor =  SystemColors.Control;
+                button.BackColor = SystemColors.Control;
             }
             if (button1 == button)
             {
@@ -199,5 +189,96 @@ namespace LW3_OKR
                        $"загальний прибуток: {GetTotalProfit()} грн";
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            LoadGoods("Sushi");
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            LoadGoods("Rols");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            LoadSets();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            LoadGoods("Drinks");
+        }
+        private void LoadGoods(string type)
+        {
+            flowGoods.Controls.Clear(); // очищення старих кнопок
+
+            var client = new MongoClient("mongodb+srv://ivandmytruk42_db_user:lwokr123@db.rdcvntl.mongodb.net/?appName=DB");
+            var db = client.GetDatabase("LW3_OKR_DB");
+            var collection = db.GetCollection<Goods>("Goods");
+
+            var filter = Builders<Goods>.Filter.Eq(g => g.Type, type);
+            var goods = collection.Find(filter).ToList();
+
+            foreach (var g in goods)
+            {
+                Button btn = new Button();
+                btn.Width = 150;
+                btn.Height = 60;
+                btn.Text = $"{g.Name}";
+                btn.Font = new Font("Segoe UI", 10);
+                btn.BackColor = Color.WhiteSmoke;
+                btn.FlatStyle = FlatStyle.Flat;
+
+                // приклад — натиснувши товар, можна показати інфо
+                btn.Click += (s, e) =>
+                {
+                    MessageBox.Show($"Товар: {g.Name}\nВартість: {g.Quantity}");
+                };
+
+                flowGoods.Controls.Add(btn);
+            }
+        }
+        private void LoadSets()
+        {
+            flowGoods.Controls.Clear();
+
+            var client = new MongoClient("mongodb+srv://ivandmytruk42_db_user:lwokr123@db.rdcvntl.mongodb.net/?appName=DB");
+            var db = client.GetDatabase("LW3_OKR_DB");
+
+            var setsCollection = db.GetCollection<Sets>("Sets");
+            var goodsCollection = db.GetCollection<Goods>("Goods");
+
+            var sets = setsCollection.Find(new BsonDocument()).ToList();
+
+            foreach (var set in sets)
+            {
+                // Завантажуємо товари, які входять у сет
+                var filter = Builders<Goods>.Filter.In(g => g.Id, set.GoodsIds);
+                var goodsInSet = goodsCollection.Find(filter).ToList();
+
+                // Формуємо текст для кнопки (імена товарів)
+                string goodsList = string.Join(", ", goodsInSet.Select(g => g.Name));
+
+                Button btn = new Button();
+                btn.Width = 200;
+                btn.Height = 80;
+                btn.Font = new Font("Segoe UI", 10);
+                btn.BackColor = Color.LightGoldenrodYellow;
+                btn.FlatStyle = FlatStyle.Flat;
+
+                btn.Text = $"{set.SetName}\n[{goodsList}]";
+
+                btn.Click += (s, e) =>
+                {
+                    MessageBox.Show(
+                        $"Сет: {set.SetName}\n\nДо складу входять:\n{string.Join("\n", goodsInSet.Select(g => "- " + g.Name))}"
+                    );
+                };
+
+                flowGoods.Controls.Add(btn);
+            }
+        }
+
     }
 }

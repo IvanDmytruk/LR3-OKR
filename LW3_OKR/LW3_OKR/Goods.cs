@@ -13,11 +13,11 @@ namespace LW3_OKR
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string Id { get; set; }
         [BsonElement("Type")]
-        public string Type { get; set; }
+        public string? Type { get; set; }
         [BsonElement("Name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
         [BsonElement("Quantity")]
-        public int Quantity { get; set; }
+        public int? Quantity { get; set; }
         public Goods()
         {
             Type = "";
@@ -35,9 +35,9 @@ namespace LW3_OKR
     {
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string? Id { get; set; }
         [BsonElement("SetName")]
-        public string SetName { get; set; }
+        public string? SetName { get; set; }
         [BsonElement("GoodsIds")]
         public List<string> GoodsIds { get; set; }
         public Sets()

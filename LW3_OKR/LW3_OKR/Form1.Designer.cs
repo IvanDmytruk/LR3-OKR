@@ -37,6 +37,7 @@
             pictureBox2 = new PictureBox();
             VivePersonal = new Button();
             button6 = new Button();
+            flowGoods = new FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
@@ -60,28 +61,31 @@
             button1.TabIndex = 1;
             button1.Text = "Суші";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             button1.MouseEnter += button1_MouseEnter;
             button1.MouseLeave += button1_MouseLeave;
             // 
             // button2
             // 
-            button2.Location = new Point(3, 144);
+            button2.Location = new Point(3, 209);
             button2.Name = "button2";
             button2.Size = new Size(73, 59);
             button2.TabIndex = 2;
             button2.Text = "Сети";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             button2.MouseEnter += button1_MouseEnter;
             button2.MouseLeave += button1_MouseLeave;
             // 
             // button3
             // 
-            button3.Location = new Point(3, 209);
+            button3.Location = new Point(3, 144);
             button3.Name = "button3";
             button3.Size = new Size(73, 59);
             button3.TabIndex = 3;
             button3.Text = "Роли";
             button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             button3.MouseEnter += button1_MouseEnter;
             button3.MouseLeave += button1_MouseLeave;
             // 
@@ -93,6 +97,7 @@
             button4.TabIndex = 4;
             button4.Text = "Напої";
             button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
             button4.MouseEnter += button1_MouseEnter;
             button4.MouseLeave += button1_MouseLeave;
             // 
@@ -136,12 +141,22 @@
             button6.Text = "Call-центр";
             button6.UseVisualStyleBackColor = true;
             // 
+            // flowGoods
+            // 
+            flowGoods.BackgroundImage = Properties.Resources.ChatGPT_Image_12_лист__2025_р___09_39_43;
+            flowGoods.BackgroundImageLayout = ImageLayout.Stretch;
+            flowGoods.Location = new Point(82, 79);
+            flowGoods.Name = "flowGoods";
+            flowGoods.Size = new Size(882, 433);
+            flowGoods.TabIndex = 9;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ButtonHighlight;
             ClientSize = new Size(976, 514);
+            Controls.Add(flowGoods);
             Controls.Add(button6);
             Controls.Add(VivePersonal);
             Controls.Add(pictureBox2);
@@ -170,5 +185,6 @@
         private PictureBox pictureBox2;
         private Button VivePersonal;
         private Button button6;
+        private FlowLayoutPanel flowGoods;
     }
 }
