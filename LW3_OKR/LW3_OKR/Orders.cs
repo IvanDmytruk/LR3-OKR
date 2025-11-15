@@ -19,17 +19,25 @@ namespace LW3_OKR
         public DateTime Date { get; set; }
         [BsonElement("PersonalId")] // типу хто приняв чи видав замовлення
         public string PersonalId { get; set; }
+        [BsonElement("Sum")]
+        public decimal Sum { get; set; }
+        [BsonElement("Tip")]
+        public decimal Tip { get; set; }
         public Orders()
         {
             Number = "";
             Date = DateTime.Now;
             PersonalId = "";
+            Sum = 0;
+            Tip = 0;
         }
         public Orders(string number, DateTime date, string personalId)
         {
             Number = number;
             Date = date;
             PersonalId = personalId;
+            Sum = 0;
+            Tip = 0;
         }
     }
 }
