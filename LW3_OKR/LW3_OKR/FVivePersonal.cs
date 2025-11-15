@@ -42,11 +42,14 @@ namespace LW3_OKR
             label4.Text = "Посада: " + p.Position;
             label5.Text = "Статус: " + p.Stat;
 
-            if (File.Exists(p.Image))
-                pictureBox1.Image = Image.FromFile(p.Image);
+            string fullPath = Path.Combine(Application.StartupPath, "Images", p.Image);
+
+            if (File.Exists(fullPath))
+                pictureBox1.Image = Image.FromFile(fullPath);
             else
             {
-                MessageBox.Show("NO FILE FOUND at: " + p.Image);
+                MessageBox.Show("NO FILE FOUND at: " + fullPath);
+                pictureBox1.Image = null;
             }
         }
 
