@@ -2,14 +2,23 @@
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using System.Text;
+using System.Windows.Forms;
+using Microsoft.VisualBasic; // для InputBox
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.DataFormats;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+
 namespace LW3_OKR
 {
     public partial class Form1 : Form
     {
+        // Поточне замовлення (кошик)
+        private Order currentOrder;
+
         public Form1()
         {
             InitializeComponent();
@@ -18,6 +27,7 @@ namespace LW3_OKR
             button3.Font = new Font("Segoe UI Emoji", 12);
             button4.Font = new Font("Segoe UI Emoji", 12);
         }
+
         private void VivePersonal_Click(object sender, EventArgs e)
         {
             FVivePersonal fVivePersonal = new FVivePersonal();
@@ -47,7 +57,6 @@ namespace LW3_OKR
             {
                 button.Text = "🥤";
             }
-
         }
 
         private void button1_MouseLeave(object sender, EventArgs e)
@@ -74,6 +83,9 @@ namespace LW3_OKR
                 button.Text = "Напої";
             }
         }
+
+        // ====== БІЗНЕС-КЛАСИ ======
+
         public class Client
         {
             public int Id { get; set; }
@@ -94,6 +106,7 @@ namespace LW3_OKR
                 return $"{Name} ({Phone})";
             }
         }
+
         public class Income
         {
             public DateTime Date { get; set; }
@@ -190,6 +203,40 @@ namespace LW3_OKR
             }
         }
 
+        // НОВЕ: клас поточного замовлення
+        public class Order
+        {
+            public Client Client { get; set; }
+            public List<Goods> Items { get; set; }
+            public decimal Tips { get; set; }
+            public DateTime Date { get; set; }
+
+            public Order(Client client)
+            {
+                Client = client;
+                Items = new List<Goods>();
+                Date = DateTime.Now;
+                Tips = 0;
+            }
+
+            // Додати товар в замовлення
+            public void AddItem(Goods g) => Items.Add(g);
+
+            // Сума страв (припускаю, що ціна = Quantity)
+            public decimal GetItemsSum()
+            {
+                return Items.Sum(x => (decimal)x.Quantity);
+            }
+
+            // Повна сума = страви + чайові
+            public decimal GetTotal()
+            {
+                return GetItemsSum() + Tips;
+            }
+        }
+
+        // ====== Обробники кнопок меню ======
+
         private void button1_Click(object sender, EventArgs e)
         {
             LoadGoods("Sushi");
@@ -209,6 +256,9 @@ namespace LW3_OKR
         {
             LoadGoods("Drinks");
         }
+
+        // ====== Завантаження товарів ======
+
         private void LoadGoods(string type)
         {
             flowGoods.Controls.Clear(); // очищення старих кнопок
@@ -225,20 +275,39 @@ namespace LW3_OKR
                 Button btn = new Button();
                 btn.Width = 150;
                 btn.Height = 60;
-                btn.Text = $"{g.Name}";
+
+                // 🔹 Показуємо назву + ціну на кнопці
+                btn.Text = $"{g.Name}\n{g.Quantity} грн";
                 btn.Font = new Font("Segoe UI", 10);
                 btn.BackColor = Color.WhiteSmoke;
                 btn.FlatStyle = FlatStyle.Flat;
 
-                // приклад — натиснувши товар, можна показати інфо
+                // При натисканні:
                 btn.Click += (s, e) =>
                 {
-                    MessageBox.Show($"Товар: {g.Name}\nВартість: {g.Quantity}");
+                    // 1) Якщо замовлення ще не створене — створюємо для гостя
+                    if (currentOrder == null)
+                    {
+                        var guest = new Client(1, "Гість", "000", "-");
+                        currentOrder = new Order(guest);
+                    }
+
+                    // 2) Додаємо товар у поточне замовлення
+                    currentOrder.AddItem(g);
+
+                    // 3) Показуємо маленьке вікно з інформацією (як було раніше, але + фраза)
+                    MessageBox.Show(
+                        $"Товар: {g.Name}\nВартість: {g.Quantity} грн\n\nДодано до поточного замовлення.",
+                        "Товар додано",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information
+                    );
                 };
 
                 flowGoods.Controls.Add(btn);
             }
         }
+
         private void LoadSets()
         {
             flowGoods.Controls.Clear();
@@ -271,8 +340,29 @@ namespace LW3_OKR
 
                 btn.Click += (s, e) =>
                 {
+                    // Якщо замовлення ще немає тоді створюємо
+                    if (currentOrder == null)
+                    {
+                        var guest = new Client(1, "Гість", "000", "-");
+                        currentOrder = new Order(guest);
+                    }
+
+                    // Додаємо всі товари сета до замовлення
+                    foreach (var g in goodsInSet)
+                    {
+                        currentOrder.AddItem(g);
+                    }
+
+                    // Рахуємо суму сета
+                    decimal setSum = goodsInSet.Sum(x => (decimal)x.Quantity);
+
                     MessageBox.Show(
-                        $"Сет: {set.SetName}\n\nДо складу входять:\n{string.Join("\n", goodsInSet.Select(g => "- " + g.Name))}"
+                        $"Сет: {set.SetName}\n\n" +
+                        $"До складу входять:\n{string.Join("\n", goodsInSet.Select(g => "- " + g.Name))}\n\n" +
+                        $"Сума сета: {setSum} грн\n\nДодано до поточного замовлення.",
+                        "Сет додано",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information
                     );
                 };
 
@@ -280,5 +370,68 @@ namespace LW3_OKR
             }
         }
 
+        // ====== ВІКНО ПОТОЧНОГО ЗАМОВЛЕННЯ + СКАСУВАННЯ ======
+
+        private void ShowCurrentOrder()
+        {
+            if (currentOrder == null || currentOrder.Items.Count == 0)
+            {
+                MessageBox.Show("Поточне замовлення порожнє.", "Інформація",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Запитуємо/оновлюємо чайові
+            string tipsStr = Interaction.InputBox(
+                "Введіть чайові (грн, можна 0):",
+                "Чайові",
+                currentOrder.Tips.ToString()
+            );
+
+            if (decimal.TryParse(tipsStr, out decimal tips))
+            {
+                currentOrder.Tips = tips;
+            }
+
+            // Формуємо текст замовлення
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Поточне замовлення:");
+            sb.AppendLine(new string('-', 30));
+
+            foreach (var item in currentOrder.Items)
+            {
+                sb.AppendLine($"{item.Name} — {item.Quantity} грн");
+            }
+
+            sb.AppendLine(new string('-', 30));
+            sb.AppendLine($"Сума страв: {currentOrder.GetItemsSum()} грн");
+            sb.AppendLine($"Чайові: {currentOrder.Tips} грн");
+            sb.AppendLine($"Разом: {currentOrder.GetTotal()} грн");
+            sb.AppendLine();
+            sb.AppendLine("Натисніть \"Так\", щоб скасувати поточне замовлення.");
+            sb.AppendLine("Натисніть \"Ні\", щоб залишити замовлення.");
+
+            var result = MessageBox.Show(
+                sb.ToString(),
+                "Поточне замовлення",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Information
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                currentOrder = null;
+                MessageBox.Show("Поточне замовлення скасовано.", "Скасовано",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        // ПРИКЛАД обробника для кнопки "Поточне замовлення"
+        // Створи на формі кнопку, назви її, наприклад, buttonCurrentOrder
+        // і прив'яжи цей метод до події Click.
+        private void buttonCurrentOrder_Click(object sender, EventArgs e)
+        {
+            ShowCurrentOrder();
+        }
     }
 }
