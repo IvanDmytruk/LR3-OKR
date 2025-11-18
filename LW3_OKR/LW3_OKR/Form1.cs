@@ -7,7 +7,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+<<<<<<< HEAD
 using Microsoft.VisualBasic; // для InputBox
+=======
+using Microsoft.VisualBasic;
+>>>>>>> 543d696890a927308028b69e42562603f22e34ac
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static System.Windows.Forms.DataFormats;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
@@ -222,7 +226,11 @@ namespace LW3_OKR
             // Додати товар в замовлення
             public void AddItem(Goods g) => Items.Add(g);
 
+<<<<<<< HEAD
             // Сума страв (припускаю, що ціна = Quantity)
+=======
+            // Сума страв 
+>>>>>>> 543d696890a927308028b69e42562603f22e34ac
             public decimal GetItemsSum()
             {
                 return Items.Sum(x => (decimal)x.Quantity);
@@ -234,9 +242,12 @@ namespace LW3_OKR
                 return GetItemsSum() + Tips;
             }
         }
+<<<<<<< HEAD
 
         // ====== Обробники кнопок меню ======
 
+=======
+>>>>>>> 543d696890a927308028b69e42562603f22e34ac
         private void button1_Click(object sender, EventArgs e)
         {
             LoadGoods("Sushi");
@@ -427,11 +438,23 @@ namespace LW3_OKR
         }
 
         // ПРИКЛАД обробника для кнопки "Поточне замовлення"
+<<<<<<< HEAD
         // Створи на формі кнопку, назви її, наприклад, buttonCurrentOrder
         // і прив'яжи цей метод до події Click.
         private void buttonCurrentOrder_Click(object sender, EventArgs e)
         {
             ShowCurrentOrder();
+=======
+        private void buttonCurrentOrder_Click(object sender, EventArgs e)
+        {
+            ShowCurrentOrder();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            OrderForm OrderForm = new OrderForm();
+            OrderForm.ShowDialog();
+>>>>>>> 543d696890a927308028b69e42562603f22e34ac
         }
     }
 }

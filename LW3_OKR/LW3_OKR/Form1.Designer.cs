@@ -36,8 +36,13 @@
             pictureBox1 = new PictureBox();
             pictureBox2 = new PictureBox();
             VivePersonal = new Button();
+<<<<<<< HEAD
             button6 = new Button();
             flowGoods = new FlowLayoutPanel();
+=======
+            flowGoods = new FlowLayoutPanel();
+            button5 = new Button();
+>>>>>>> 543d696890a927308028b69e42562603f22e34ac
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
@@ -124,7 +129,7 @@
             // 
             // VivePersonal
             // 
-            VivePersonal.Location = new Point(708, 18);
+            VivePersonal.Location = new Point(845, 22);
             VivePersonal.Name = "VivePersonal";
             VivePersonal.Size = new Size(119, 46);
             VivePersonal.TabIndex = 7;
@@ -132,14 +137,33 @@
             VivePersonal.UseVisualStyleBackColor = true;
             VivePersonal.Click += VivePersonal_Click;
             // 
-            // button6
+            // flowGoods
             // 
+<<<<<<< HEAD
             button6.Location = new Point(847, 18);
             button6.Name = "button6";
             button6.Size = new Size(119, 46);
             button6.TabIndex = 8;
             button6.Text = "Call-центр";
             button6.UseVisualStyleBackColor = true;
+=======
+            flowGoods.BackgroundImage = Properties.Resources.ChatGPT_Image_12_лист__2025_р___09_39_43;
+            flowGoods.BackgroundImageLayout = ImageLayout.Stretch;
+            flowGoods.Location = new Point(82, 79);
+            flowGoods.Name = "flowGoods";
+            flowGoods.Size = new Size(882, 433);
+            flowGoods.TabIndex = 9;
+            // 
+            // button5
+            // 
+            button5.Location = new Point(553, 22);
+            button5.Name = "button5";
+            button5.Size = new Size(212, 46);
+            button5.TabIndex = 10;
+            button5.Text = "Переглянути замовлення";
+            button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
+>>>>>>> 543d696890a927308028b69e42562603f22e34ac
             // 
             // flowGoods
             // 
@@ -156,8 +180,13 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ButtonHighlight;
             ClientSize = new Size(976, 514);
+<<<<<<< HEAD
             Controls.Add(flowGoods);
             Controls.Add(button6);
+=======
+            Controls.Add(button5);
+            Controls.Add(flowGoods);
+>>>>>>> 543d696890a927308028b69e42562603f22e34ac
             Controls.Add(VivePersonal);
             Controls.Add(pictureBox2);
             Controls.Add(button4);
@@ -184,7 +213,12 @@
         private PictureBox pictureBox1;
         private PictureBox pictureBox2;
         private Button VivePersonal;
+<<<<<<< HEAD
         private Button button6;
         private FlowLayoutPanel flowGoods;
+=======
+        private FlowLayoutPanel flowGoods;
+        private Button button5;
+>>>>>>> 543d696890a927308028b69e42562603f22e34ac
     }
 }
